@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 public class DatabaseConfig {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/DealershipDatabase";
     private static final String DB_USERNAME = "root"; // Change to your MySQL username
-    private static final String DB_PASSWORD = "Salimewol$"; // Change to your MySQL password
+    private static final String DB_PASSWORD = "Mypassword1$"; // Change to your MySQL password
 
     private static BasicDataSource dataSource;
 
