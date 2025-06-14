@@ -189,4 +189,86 @@ public class AdminUserInterface {
         List<Vehicle> vehicles = dealershipManager.getAllAvailableVehicles();
 
         if (vehicles.isEmpty()) {
-            System.
+            System.out.println("No vehicles found.");
+            return;
+        }
+
+        System.out.println("\n=== All Available Vehicles ===");
+        for (Vehicle vehicle : vehicles) {
+            System.out.println(vehicle);
+        }
+        System.out.println("Total vehicles: " + vehicles.size());
+    }
+
+    private Dealership selectDealership() {
+        List<Dealership> dealerships = dealershipManager.getAllDealerships();
+
+        if (dealerships.isEmpty()) {
+            System.out.println("No dealerships found!");
+            return null;
+        }
+
+        System.out.println("\nSelect a dealership:");
+        for (int i = 0; i < dealerships.size(); i++) {
+            System.out.println((i + 1) + ". " + dealerships.get(i));
+        }
+
+        System.out.print("Enter choice (1-" + dealerships.size() + "): ");
+        try {
+            int choice = Integer.parseInt(scanner.nextLine().trim());
+            if (choice >= 1 && choice <= dealerships.size()) {
+                return dealerships.get(choice - 1);
+            } else {
+                System.out.println("Invalid selection.");
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input.");
+            return null;
+        }
+    }
+
+    private LocalDate getDateInput(String prompt) {
+        System.out.print(prompt);
+        String input = scanner.nextLine().trim();
+
+        try {
+            return LocalDate.parse(input, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Please use YYYY-MM-DD format.");
+            return null;
+        }
+    }
+
+    private void displaySalesContractsWithSummary(List<SalesContract> contracts, String title) {
+        if (contracts.isEmpty()) {
+            System.out.println("No " + title.toLowerCase() + " found.");
+            return;
+        }
+
+        System.out.println("\n=== " + title + " ===");
+        double totalSales = 0;
+        for (SalesContract contract : contracts) {
+            System.out.println(contract);
+            totalSales += contract.getSalePrice();
+        }
+        System.out.printf("Total Sales: $%.2f%n", totalSales);
+        System.out.println("Total Contracts: " + contracts.size());
+    }
+
+    private void displayLeaseContractsWithSummary(List<LeaseContract> contracts, String title) {
+        if (contracts.isEmpty()) {
+            System.out.println("No " + title.toLowerCase() + " found.");
+            return;
+        }
+
+        System.out.println("\n=== " + title + " ===");
+        double totalMonthlyPayments = 0;
+        for (LeaseContract contract : contracts) {
+            System.out.println(contract);
+            totalMonthlyPayments += contract.getMonthlyPayment();
+        }
+        System.out.printf("Total Monthly Payments: $%.2f%n", totalMonthlyPayments);
+        System.out.println("Total Contracts: " + contracts.size());
+    }
+}
